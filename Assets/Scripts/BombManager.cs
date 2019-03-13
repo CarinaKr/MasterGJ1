@@ -10,6 +10,7 @@ public class BombManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        gameManager = GameManager.self;
         InstantiateBombs();
 	}
 	

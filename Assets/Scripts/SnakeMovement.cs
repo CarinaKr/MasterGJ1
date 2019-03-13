@@ -29,7 +29,7 @@ public class SnakeMovement : MonoBehaviour {
 	void Update () {
         path.Add(head.position);    //add current position of head to path
         head.Rotate(Vector3.back, Input.GetAxis("Horizontal") * turnspeed * Time.deltaTime);    //rotate head
-        head.Translate(head.right * speed * Time.deltaTime, Space.World);    //move head in look direction
+        head.Translate(head.up * speed * Time.deltaTime, Space.World);    //move head in look direction
 
         for (int i = 0; i < bodies.Count; i++)
         {
@@ -44,7 +44,7 @@ public class SnakeMovement : MonoBehaviour {
             }
             
 
-            bodies[i].right = nextPosition[i] - bodies[i].position;
+            bodies[i].up = nextPosition[i] - bodies[i].position;
             bodies[i].position = Vector3.MoveTowards(bodies[i].position, nextPosition[i], speed*Time.deltaTime);
         }
         

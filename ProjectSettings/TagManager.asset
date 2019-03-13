@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bomb
+  - Note
+  - Wall
+  - Body
   layers:
   - Default
   - TransparentFX
@@ -44,6 +48,12 @@ TagManager:
   - name: Background
     uniqueID: 128166603
     locked: 0
+  - name: Collectables
+    uniqueID: 3405192315
+    locked: 0
   - name: Snake
     uniqueID: 1877365117
+    locked: 0
+  - name: Stitches
+    uniqueID: 1927052793
     locked: 0

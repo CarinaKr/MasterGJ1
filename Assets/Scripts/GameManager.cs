@@ -27,13 +27,25 @@ public class GameManager : MonoBehaviour {
         order = new ArrayList();
 
         //block for frame (left, right, top 1 each; bottom 4)
-        for (int i=0;i<width;i++)
+        for (int i=0;i<width;i++)   
         {
-            for(int j=0;j<4;j++)
+            for(int j=0;j<4;j++)    //bottom
             {
                 fieldBlocked[i, j] = true;
             }
+
+            fieldBlocked[i, height - 1] = true; //top
+
+            if(i==0 || i==width-1)
+            {
+                for (int k = 0; k < height; k++)    //left and right
+                {
+                    fieldBlocked[i, k] = true;
+                }
+            }
+
         }
+
 
         //TODO block snake
 
@@ -66,6 +78,16 @@ public class GameManager : MonoBehaviour {
         return randomPosition;
     }
 
+    public void AddNoteToSound(Note collectedNote)
+    {
+        FreeNote(collectedNote.transform.position);
+        order.RemoveAt(0);
+        if (order.Count == 0)
+        {
+            Win();
+        }
+    }
+
     public void BlockNote(Vector2 position)
     {
         fieldBlocked[(int)position.x, (int)position.y] = true;
@@ -73,5 +95,14 @@ public class GameManager : MonoBehaviour {
     public void FreeNote(Vector2 position)
     {
         fieldBlocked[(int)position.x, (int)position.y] = false;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("game over");
+    }
+    public void Win()
+    {
+        Debug.Log("Win");
     }
 }
