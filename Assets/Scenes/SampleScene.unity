@@ -323,10 +323,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e60851b5b656c4db4ed578b8c967c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 53411985}
-  tail: {fileID: 793091010}
-  body:
-  - {fileID: 1096939105}
+  head: {fileID: 53411986}
+  tail: {fileID: 793091011}
+  bodies:
+  - {fileID: 1096939106}
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.6039734, b: 0, a: 1}
+  - {r: 1, g: 0.9267906, b: 0, a: 1}
+  - {r: 0.6075411, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.8023877, a: 1}
+  - {r: 0, g: 0.6440239, b: 1, a: 1}
+  - {r: 0, g: 0.08852029, b: 1, a: 1}
+  - {r: 0.70597124, g: 0, b: 1, a: 1}
+  speed: 1
+  turnspeed: 20
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +731,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b82031b01cc2dd04eb9959527f126d24, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9245283, g: 0.9198526, b: 0.72828406, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
