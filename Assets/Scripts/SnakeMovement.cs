@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SnakeMovement : MonoBehaviour {
 
+    public GameObject head;
+    public GameObject tail;
+    public List<GameObject> body;
+    public Color[] colors;
+
 	// Use this for initialization
 	void Start () {
 		
