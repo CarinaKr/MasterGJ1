@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeManager : MonoBehaviour {
+public class HeadManager : MonoBehaviour {
 
-    GameManager gameManager;
+    private GameManager gameManager;
+    public SnakeMovement snakeMovement;
+    public BombManager bombManager;
+
 
     private void Start()
     {
@@ -16,6 +19,10 @@ public class SnakeManager : MonoBehaviour {
         if(collision.tag=="Bomb" || collision.tag == "Body")
         {
             gameManager.GameOver();
+            if(collision.tag=="Bomb")
+            {
+                collision.gameObject.SetActive(false);
+            }
         }
         else if(collision.tag=="Note")
         {
@@ -24,6 +31,8 @@ public class SnakeManager : MonoBehaviour {
             {
                 collectedNote.gameObject.SetActive(false);
                 gameManager.AddNoteToSound(collectedNote);
+                snakeMovement.AddBody(collectedNote.colorNum);
+                bombManager.AddBombs();
             }
             else
             {
@@ -31,11 +40,7 @@ public class SnakeManager : MonoBehaviour {
             }
             
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.transform.tag=="Wall")
+        else if (collision.transform.tag == "Wall")
         {
             gameManager.GameOver();
         }

@@ -16,9 +16,21 @@ public class BombManager : MonoBehaviour {
 	
 	private void InstantiateBombs()
     {
+        GameObject newBomb;
         for(int i=0;i<gameManager.startBombCount;i++)
         {
-            Instantiate(bombPrefab, gameManager.GetRandomFreePosition(), Quaternion.identity, transform);
+            newBomb=Instantiate(bombPrefab, gameManager.GetRandomFreePosition(), Quaternion.identity, transform);
+            gameManager.BlockField(newBomb.transform.position);
+        }
+    }
+
+    public void AddBombs()
+    {
+        GameObject newBomb;
+        for (int i=0;i<gameManager.growthBombCount;i++)
+        {
+            newBomb=Instantiate(bombPrefab, gameManager.GetRandomFreePosition(), Quaternion.identity, transform);
+            gameManager.BlockField(newBomb.transform.position);
         }
     }
 }
