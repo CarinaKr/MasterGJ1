@@ -63,3 +63,9 @@ TagManager:
   - name: Background
     uniqueID: 128166603
     locked: 0
+  - name: NoteOrderBackground
+    uniqueID: 1253046801
+    locked: 0
+  - name: NoteOrder
+    uniqueID: 1350986293
+    locked: 0

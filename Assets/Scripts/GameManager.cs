@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
     public int width, height;
     public int noteCount;
     public int startBombCount, growthBombCount;
-    public Text timeText;
+    public Text timeText, highscoreText;
     [Tooltip("order: win, bomb, snake")]
     public GameObject[] gameOverScreens;
 
@@ -63,12 +63,14 @@ public class GameManager : MonoBehaviour {
         }
 
         SetRandomOrder();
+        highscoreText.text = GameLoop.self.highScore.ToString("F0");
     }
 
     private void Update()
     {
+        if (gameOver) return;
         time += Time.deltaTime;
-        timeText.text = time.ToString("F2");
+        timeText.text = time.ToString("F0");
     }
 
     private void SetRandomOrder()
@@ -148,6 +150,11 @@ public class GameManager : MonoBehaviour {
         gameOver = true;
         GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
         gameOverScreens[(int)gameOverCause].SetActive(true);
+        if(time < GameLoop.self.highScore)
+        {
+            GameLoop.self.highScore = time;
+            timeText.color = highscoreText.color;
+        }
     }
     public void Win()
     {

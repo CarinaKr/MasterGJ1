@@ -13,8 +13,10 @@ public class GameLoop : MonoBehaviour {
     }
 
     public static GameLoop self;
+    public GameState startGameState;
     public GameState gameState { get; set; }
     public float highScore { get; set; }
+
 
     private void Awake()
     {
@@ -30,21 +32,22 @@ public class GameLoop : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
-        gameState = GameState.MENU;
+        gameState = startGameState;
+        highScore = Mathf.Infinity;
     }
 
     // Update is called once per frame
     void Update () {
 		if(gameState==GameState.MENU)
         {
-            if(Input.anyKey)
+            if(Input.anyKeyDown)
             {
                 SceneManager.LoadScene(1);
             }
         }
         else if(gameState==GameState.GAMEOVER)
         {
-            if(Input.anyKey)
+            if(Input.anyKeyDown)
             {
                 SceneManager.LoadScene(0);
             }
