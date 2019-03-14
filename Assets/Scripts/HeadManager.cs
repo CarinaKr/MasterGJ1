@@ -16,13 +16,14 @@ public class HeadManager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag=="Bomb" || collision.tag == "Body")
+        if(collision.tag=="Bomb")
         {
-            gameManager.GameOver();
-            if(collision.tag=="Bomb")
-            {
-                collision.gameObject.SetActive(false);
-            }
+            gameManager.GameOver(GameManager.GameOverCause.BOMB);
+            collision.gameObject.SetActive(false);
+        }
+        else if(collision.tag == "Body")
+        {
+            gameManager.GameOver(GameManager.GameOverCause.SNAKE);
         }
         else if(collision.tag=="Note")
         {
@@ -42,7 +43,7 @@ public class HeadManager : MonoBehaviour {
         }
         else if (collision.transform.tag == "Wall")
         {
-            gameManager.GameOver();
+            gameManager.GameOver(GameManager.GameOverCause.WALL);
         }
     }
 }

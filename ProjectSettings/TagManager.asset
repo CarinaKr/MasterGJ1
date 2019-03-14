@@ -45,8 +45,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 128166603
+  - name: BackgroundWindow
+    uniqueID: 2573531007
     locked: 0
   - name: Collectables
     uniqueID: 3405192315
@@ -56,4 +56,10 @@ TagManager:
     locked: 0
   - name: Stitches
     uniqueID: 1927052793
+    locked: 0
+  - name: GameOver
+    uniqueID: 2297433771
+    locked: 0
+  - name: Background
+    uniqueID: 128166603
     locked: 0

@@ -1,8 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+
+    public enum GameOverCause
+    {
+        WIN,
+        BOMB,
+        SNAKE,
+        WALL
+    }
 
     public static GameManager self;
     public NoteManager noteManager;
@@ -10,6 +19,9 @@ public class GameManager : MonoBehaviour {
     public int width, height;
     public int noteCount;
     public int startBombCount, growthBombCount;
+    public Text timeText;
+    [Tooltip("order: win, bomb, snake")]
+    public GameObject[] gameOverScreens;
 
     public bool[,] fieldBlocked { get; private set; }
     public ArrayList order { get; private set; }
@@ -51,6 +63,12 @@ public class GameManager : MonoBehaviour {
         }
 
         SetRandomOrder();
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        timeText.text = time.ToString("F2");
     }
 
     private void SetRandomOrder()
@@ -125,12 +143,11 @@ public class GameManager : MonoBehaviour {
         fieldBlocked[x, y] = false;
     }
 
-    public void GameOver()
+    public void GameOver(GameOverCause gameOverCause)
     {
-        Debug.Log("game over");
         gameOver = true;
         GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
-        //TODO popup game over screen
+        gameOverScreens[(int)gameOverCause].SetActive(true);
     }
     public void Win()
     {
