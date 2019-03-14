@@ -22,7 +22,8 @@ public class NoteManager : MonoBehaviour {
         gameManager = GameManager.self;
         showOrderNotes = new List<Note>();
         InstantiateNotes();
-	}
+        gameManager.StartCoroutine("StartGame");
+    }
 
     private void InstantiateNotes()
     {

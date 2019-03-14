@@ -19,14 +19,19 @@ public class GameManager : MonoBehaviour {
     public int width, height;
     public int noteCount;
     public int startBombCount, growthBombCount;
-    public Text timeText, highscoreText;
+    public Text timeText, highscoreText,countdownText;
     [Tooltip("order: win, bomb, snake")]
     public GameObject[] gameOverScreens;
+    public Sprite snakeHeadGameOver;
+    public float timePenaltyWrongNote;
+    public AudioSource[] beats;
+    public AudioSource countdown;
 
     public bool[,] fieldBlocked { get; private set; }
     public ArrayList order { get; private set; }
     public bool gameOver { private set; get; }
     public float time { get; set; }
+    public bool gameStarted { get; set; }
 
     private void Awake()
     {
@@ -59,16 +64,15 @@ public class GameManager : MonoBehaviour {
                     fieldBlocked[i, k] = true;
                 }
             }
-
         }
-
         SetRandomOrder();
         highscoreText.text = GameLoop.self.highScore.ToString("F0");
+        
     }
 
     private void Update()
     {
-        if (gameOver) return;
+        if (gameOver || !gameStarted) return;
         time += Time.deltaTime;
         timeText.text = time.ToString("F0");
     }
@@ -101,12 +105,12 @@ public class GameManager : MonoBehaviour {
     public void AddNoteToSound(Note collectedNote)
     {
         FreeField(collectedNote.transform.position);
-        //TODO start playing new sound
+        beats[noteCount - order.Count].volume=1;
         noteManager.showOrderNotes[noteCount-order.Count].spriteRenderer.color = noteManager.greyColor;
         order.RemoveAt(0);
         if (order.Count == 0)
         {
-            Win();
+            Win(GameOverCause.WIN);
         }
     }
 
@@ -145,19 +149,38 @@ public class GameManager : MonoBehaviour {
         fieldBlocked[x, y] = false;
     }
 
-    public void GameOver(GameOverCause gameOverCause)
+    public void GameOver(GameOverCause gameOverCause, bool displayScreen)
+    {
+        gameOver = true;
+        snakeMovement.head.GetComponent<SpriteRenderer>().sprite = snakeHeadGameOver;
+        GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
+        foreach (AudioSource audio in beats)
+            audio.volume = 0;
+        if(displayScreen)
+            gameOverScreens[(int)gameOverCause].SetActive(true);
+    }
+    public void Win(GameOverCause gameOverCause)
     {
         gameOver = true;
         GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
         gameOverScreens[(int)gameOverCause].SetActive(true);
-        if(time < GameLoop.self.highScore)
+        if (time < GameLoop.self.highScore)
         {
             GameLoop.self.highScore = time;
             timeText.color = highscoreText.color;
         }
     }
-    public void Win()
+
+    private IEnumerator StartGame()
     {
-        Debug.Log("Win");
+        yield return new WaitForSeconds(0.5f);
+        for(int i=3;i>0;i--)
+        {
+            countdownText.text = i.ToString();
+            countdown.Play();
+            yield return new WaitForSeconds(1);
+        }
+        countdownText.gameObject.SetActive(false);
+        gameStarted = true;
     }
 }

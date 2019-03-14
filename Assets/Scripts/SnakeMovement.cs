@@ -29,6 +29,7 @@ public class SnakeMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (gameManager.gameOver) return;
+        if (!gameManager.gameStarted) return;
 
         path.Add(head.position);    //add current position of head to path
         head.Rotate(Vector3.back, Input.GetAxis("Horizontal") * turnspeed * Time.deltaTime);    //rotate head

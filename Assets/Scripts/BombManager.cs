@@ -33,4 +33,14 @@ public class BombManager : MonoBehaviour {
             gameManager.BlockField(newBomb.transform.position);
         }
     }
+
+    public IEnumerator Explode(GameObject bomb)
+    {
+        bomb.GetComponent<Animator>().SetTrigger("explode");
+        bomb.GetComponent<AudioSource>().Play();
+        gameManager.GameOver(GameManager.GameOverCause.BOMB,false);
+        yield return new WaitForSeconds(1.5f);
+        bomb.SetActive(false);
+        gameManager.gameOverScreens[(int)GameManager.GameOverCause.BOMB].SetActive(true);
+    }
 }
