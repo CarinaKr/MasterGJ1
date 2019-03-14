@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
     public bool[,] fieldBlocked { get; private set; }
     public ArrayList order { get; private set; }
     public bool gameOver { private set; get; }
+    public float time { get; set; }
 
     private void Awake()
     {
@@ -127,7 +128,9 @@ public class GameManager : MonoBehaviour {
     public void GameOver()
     {
         Debug.Log("game over");
-        //gameOver = true;
+        gameOver = true;
+        GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
+        //TODO popup game over screen
     }
     public void Win()
     {
