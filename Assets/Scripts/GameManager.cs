@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
     public float timePenaltyWrongNote;
     public AudioSource[] beats;
     public AudioSource countdown;
+    public AudioClip lastCountdownBeat;
 
     public bool[,] fieldBlocked { get; private set; }
     public ArrayList order { get; private set; }
@@ -180,6 +181,8 @@ public class GameManager : MonoBehaviour {
             countdown.Play();
             yield return new WaitForSeconds(1);
         }
+        countdown.clip = lastCountdownBeat;
+        countdown.Play();
         countdownText.gameObject.SetActive(false);
         gameStarted = true;
     }

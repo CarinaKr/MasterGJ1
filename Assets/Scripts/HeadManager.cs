@@ -50,9 +50,8 @@ public class HeadManager : MonoBehaviour {
         }
         else if (collision.transform.tag == "Wall")
         {
-            audioSource.clip = hitWall;
-            audioSource.Play();
-            gameManager.GameOver(GameManager.GameOverCause.WALL,true);
+            gameManager.GameOver(GameManager.GameOverCause.WALL, false);
+            StartCoroutine("HitWall");
         }
     }
 
@@ -63,5 +62,13 @@ public class HeadManager : MonoBehaviour {
         gameManager.GameOver(GameManager.GameOverCause.SNAKE, false);
         yield return new WaitForSeconds(1f);
         gameManager.gameOverScreens[(int)GameManager.GameOverCause.SNAKE].SetActive(true);
+    }
+
+    private IEnumerator HitWall()
+    {
+        audioSource.clip = hitWall;
+        audioSource.Play();
+        yield return new WaitForSeconds(0.5f);
+        gameManager.gameOverScreens[(int)GameManager.GameOverCause.WALL].SetActive(true);
     }
 }

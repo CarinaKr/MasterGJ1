@@ -39,7 +39,7 @@ public class BombManager : MonoBehaviour {
         bomb.GetComponent<Animator>().SetTrigger("explode");
         bomb.GetComponent<AudioSource>().Play();
         gameManager.GameOver(GameManager.GameOverCause.BOMB,false);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.25f);
         bomb.SetActive(false);
         gameManager.gameOverScreens[(int)GameManager.GameOverCause.BOMB].SetActive(true);
     }
