@@ -2501,7 +2501,7 @@ MonoBehaviour:
   - {fileID: 97346221}
   countdown: {fileID: 1246860345}
   lastCountdownBeat: {fileID: 8300000, guid: 97cb42c9c52a11e479ba52b94c0049d4, type: 3}
-  looseSound: {fileID: 8300000, guid: 4b766cd4739d3ec4ea2009fbe5f37e04, type: 3}
+  looseSound: {fileID: 8300000, guid: f1b7e0f3689d6fa45b16b1f1cbcbbf78, type: 3}
 --- !u!4 &1246860344
 Transform:
   m_ObjectHideFlags: 0
