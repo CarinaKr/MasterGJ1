@@ -2057,6 +2057,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefab: {fileID: 1880271642509878, guid: aab9c10f6ce4cd941819c5b17b6b389c, type: 2}
+  saveWord: 620000006f0000006d00000062000000
+  bombPenalty: 10
 --- !u!4 &1096939106 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4824632475100000, guid: b3d174d3bc46b294ab7b2de65945b533,
@@ -2485,6 +2487,7 @@ MonoBehaviour:
   - {fileID: 1650850208}
   - {fileID: 485387874}
   snakeHeadGameOver: {fileID: 21300000, guid: 2d51170f0fac3d9419c357ad635948ef, type: 3}
+  snakeHeadNormal: {fileID: 21300000, guid: a5f3a501238cdb944bf7eeaf3aa55691, type: 3}
   timePenaltyWrongNote: 5
   beats:
   - {fileID: 1240143074}
@@ -2498,6 +2501,7 @@ MonoBehaviour:
   - {fileID: 97346221}
   countdown: {fileID: 1246860345}
   lastCountdownBeat: {fileID: 8300000, guid: 97cb42c9c52a11e479ba52b94c0049d4, type: 3}
+  looseSound: {fileID: 8300000, guid: 4b766cd4739d3ec4ea2009fbe5f37e04, type: 3}
 --- !u!4 &1246860344
 Transform:
   m_ObjectHideFlags: 0

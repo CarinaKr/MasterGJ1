@@ -22,17 +22,20 @@ public class GameManager : MonoBehaviour {
     public Text timeText, highscoreText,countdownText;
     [Tooltip("order: win, bomb, snake")]
     public GameObject[] gameOverScreens;
-    public Sprite snakeHeadGameOver;
+    public Sprite snakeHeadGameOver,snakeHeadNormal;
     public float timePenaltyWrongNote;
     public AudioSource[] beats;
     public AudioSource countdown;
     public AudioClip lastCountdownBeat;
+    public AudioClip looseSound;
 
     public bool[,] fieldBlocked { get; private set; }
     public ArrayList order { get; private set; }
     public bool gameOver { private set; get; }
     public float time { get; set; }
     public bool gameStarted { get; set; }
+
+    private List<AudioSource> collectedBeats;
 
     private void Awake()
     {
@@ -68,7 +71,7 @@ public class GameManager : MonoBehaviour {
         }
         SetRandomOrder();
         highscoreText.text = GameLoop.self.highScore.ToString("F0");
-        
+        collectedBeats = new List<AudioSource>();
     }
 
     private void Update()
@@ -107,6 +110,7 @@ public class GameManager : MonoBehaviour {
     {
         FreeField(collectedNote.transform.position);
         beats[noteCount - order.Count].volume=1;
+        collectedBeats.Add(beats[noteCount - order.Count]);
         noteManager.showOrderNotes[noteCount-order.Count].spriteRenderer.color = noteManager.greyColor;
         order.RemoveAt(0);
         if (order.Count == 0)
@@ -154,11 +158,25 @@ public class GameManager : MonoBehaviour {
     {
         gameOver = true;
         snakeMovement.head.GetComponent<SpriteRenderer>().sprite = snakeHeadGameOver;
-        GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
+        if(gameOverCause!=GameOverCause.BOMB)
+            GameLoop.self.gameState = GameLoop.GameState.GAMEOVER;
         foreach (AudioSource audio in beats)
             audio.volume = 0;
         if(displayScreen)
+        {
             gameOverScreens[(int)gameOverCause].SetActive(true);
+            countdown.clip = looseSound;
+            countdown.loop = true;
+            countdown.Play();
+        }
+    }
+    public void RevertGameOver()
+    {
+        gameOver = false;
+        snakeMovement.head.GetComponent<SpriteRenderer>().sprite = snakeHeadNormal;
+        GameLoop.self.gameState = GameLoop.GameState.GAME;
+        foreach (AudioSource audio in collectedBeats)
+            audio.volume = 1;
     }
     public void Win(GameOverCause gameOverCause)
     {

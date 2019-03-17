@@ -62,6 +62,9 @@ public class HeadManager : MonoBehaviour {
         gameManager.GameOver(GameManager.GameOverCause.SNAKE, false);
         yield return new WaitForSeconds(1f);
         gameManager.gameOverScreens[(int)GameManager.GameOverCause.SNAKE].SetActive(true);
+        gameManager.countdown.clip = gameManager.looseSound;
+        gameManager.countdown.loop = true;
+        gameManager.countdown.Play();
     }
 
     private IEnumerator HitWall()
@@ -70,5 +73,8 @@ public class HeadManager : MonoBehaviour {
         audioSource.Play();
         yield return new WaitForSeconds(0.5f);
         gameManager.gameOverScreens[(int)GameManager.GameOverCause.WALL].SetActive(true);
+        gameManager.countdown.clip = gameManager.looseSound;
+        gameManager.countdown.loop = true;
+        gameManager.countdown.Play();
     }
 }

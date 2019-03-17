@@ -9,6 +9,7 @@ public class GameLoop : MonoBehaviour {
     {
         MENU,
         GAME,
+        SAVE,
         GAMEOVER
     }
 
