@@ -16,7 +16,7 @@ public class BombManager : MonoBehaviour {
 	void Start () {
         gameManager = GameManager.self;
         InstantiateBombs();
-	}
+    }
 	
 	private void InstantiateBombs()
     {
@@ -24,7 +24,10 @@ public class BombManager : MonoBehaviour {
         for(int i=0;i<gameManager.startBombCount;i++)
         {
             newBomb=Instantiate(bombPrefab, gameManager.GetRandomFreePosition(), Quaternion.identity, transform);
-            gameManager.BlockField(newBomb.transform.position);
+            if (!Mathf.Approximately(newBomb.transform.position.x, 0f))
+                gameManager.BlockField(newBomb.transform.position);
+            else
+                newBomb.gameObject.SetActive(false);
         }
     }
 
@@ -48,6 +51,7 @@ public class BombManager : MonoBehaviour {
         StartCoroutine("WaitForSave");
         yield return new WaitForSeconds(1.25f);
         StopCoroutine("WaitForSave");
+        gotSaved = true;    //DEBUG
         bomb.SetActive(false);
         if (!gotSaved)
         {

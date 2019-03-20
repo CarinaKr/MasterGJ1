@@ -38,7 +38,10 @@ public class NoteManager : MonoBehaviour {
             note = nextNote.GetComponent<Note>();
             note.spriteRenderer.color = colors[(int)gameManager.order[i]];
             note.colorNum = (int)gameManager.order[i];
-            gameManager.BlockField(note.transform.position);
+            if (!Mathf.Approximately(nextNote.transform.position.x, 0f))
+                gameManager.BlockField(note.transform.position);
+            else
+                nextNote.gameObject.SetActive(false);
 
             nextNoteShowOrder = Instantiate(orderPrefabs[prefabNumber], showOrderPositions[i].position, Quaternion.identity, orderParent);
             note = nextNoteShowOrder.GetComponent<Note>();

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
     public bool gameStarted { get; set; }
 
     private List<AudioSource> collectedBeats;
+    private float cellSize;
 
     private void Awake()
     {
@@ -54,14 +55,14 @@ public class GameManager : MonoBehaviour {
         //block for frame (left, right, top 1 each; bottom 4)
         for (int i=0;i<width;i++)   
         {
-            for(int j=0;j<4;j++)    //bottom
+            for (int j = 0; j < 4; j++)    //bottom  DEBUG
             {
                 fieldBlocked[i, j] = true;
             }
 
             fieldBlocked[i, height - 1] = true; //top
 
-            if(i==0 || i==width-1)
+            if (i == 0 || i == width - 1)
             {
                 for (int k = 0; k < height; k++)    //left and right
                 {
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour {
         SetRandomOrder();
         highscoreText.text = GameLoop.self.highScore.ToString("F0");
         collectedBeats = new List<AudioSource>();
+        cellSize = (float)39 / (float)width;
     }
 
     private void Update()
@@ -97,12 +99,17 @@ public class GameManager : MonoBehaviour {
     public Vector2 GetRandomFreePosition()
     {
         int posX, posY;
+        int tryCounter = 0;
         do
         {   posX = Random.Range(0, width);
             posY = Random.Range(0, height);
-        } while (fieldBlocked[posX, posY] || ContainsSnake(posX,posY));
+            tryCounter++;
+        } while ((fieldBlocked[posX, posY] || ContainsSnake(posX,posY)) && tryCounter<100);
+        Debug.Log("try counter: " + tryCounter);
+        if(tryCounter>=100)
+            return new Vector2(0,0);
 
-        Vector2 randomPosition = new Vector2(0.75f+(posX*1.5f), 0.75f+(posY*1.5f));
+        Vector2 randomPosition = new Vector2((cellSize/2)+(posX*cellSize), (cellSize/2)+(posY*cellSize));
         return randomPosition;
     }
 
@@ -122,7 +129,7 @@ public class GameManager : MonoBehaviour {
     public bool ContainsSnake(int x, int y)
     {
         bool blocked=false;
-        if (snakeMovement.head.position.x > x * 1.5 && snakeMovement.head.position.x < (x + 1) * 1.5 && snakeMovement.head.position.y > y * 1.5 && snakeMovement.head.position.y < (y + 1) * 1.5)
+        if (snakeMovement.head.position.x > x * cellSize && snakeMovement.head.position.x < (x + 1) * cellSize && snakeMovement.head.position.y > y * cellSize && snakeMovement.head.position.y < (y + 1) * cellSize)
         {
             blocked = true;
             return blocked;
@@ -130,7 +137,7 @@ public class GameManager : MonoBehaviour {
 
         foreach (Transform body in snakeMovement.bodies)
         {
-            if(body.position.x>x*1.5 && body.position.x<(x+1)*1.5 && body.position.y>y*1.5 && body.position.y<(y+1)*1.5)
+            if(body.position.x>x*cellSize && body.position.x<(x+1)*cellSize && body.position.y>y*cellSize && body.position.y<(y+1)*cellSize)
             {
                 blocked = true;
             }
@@ -141,15 +148,15 @@ public class GameManager : MonoBehaviour {
 
     public void BlockField(Vector2 position)
     {
-        int x = Mathf.FloorToInt(position.x / 1.5f);
-        int y = Mathf.FloorToInt(position.y / 1.5f);
+        int x = Mathf.FloorToInt(position.x / cellSize);
+        int y = Mathf.FloorToInt(position.y / cellSize);
 
         fieldBlocked[x,y] = true;
     }
     public void FreeField(Vector2 position)
     {
-        int x = Mathf.FloorToInt(position.x / 1.5f);
-        int y = Mathf.FloorToInt(position.y / 1.5f);
+        int x = Mathf.FloorToInt(position.x / cellSize);
+        int y = Mathf.FloorToInt(position.y / cellSize);
 
         fieldBlocked[x, y] = false;
     }
